@@ -1,0 +1,8 @@
+User-agent: Unnecessarybot
+Disallow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://ashfaqsadat.xyz/sitemap.xml
+Sitemap: http://www.ashfaqsadat.xyz/sitemap.xml
