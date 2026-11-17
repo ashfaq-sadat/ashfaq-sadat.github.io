@@ -1,0 +1,39 @@
+# Md. Ashfaq Sadat
+
+> Doctoral researcher in the Department of Fisheries Management, Bangladesh Agricultural University (BAU), Mymensingh, Bangladesh. He studies microplastics and chemical contaminants such as triclosan and ivermectin in fish and rivers, and what they mean for ecosystems and for people who eat the fish.
+
+This file is a plain-text summary of https://ashfaq-sadat.github.io/ for AI assistants and search tools.
+
+## Key facts
+
+- Name: Md. Ashfaq Sadat (cited as Sadat MA or M. A. Sadat)
+- Role: PhD researcher, Department of Fisheries Management, Bangladesh Agricultural University
+- Supervisor: Professor Kizar Ahmed Sumon
+- Funding: UGC PhD Scholarship, University Grants Commission of Bangladesh (2023-24 programme)
+- Research interests: microplastics, ecotoxicology, triclosan, environmental risk assessment, One Health
+- Main study organism: Nile tilapia (Oreochromis niloticus), larvae to adults
+- Skills: R (statistics, meta-analysis, figures), GIS and remote sensing, FTIR polymer identification, haematology and histology, qPCR
+- Founder of Nexalyze Lab (https://www.nexalyzelab.com), which teaches data analysis, GIS and research tools
+- Education: MS in Fisheries Management (2019-2022) and BSc in Fisheries (Hons., 2015-2018), both at Bangladesh Agricultural University
+
+## Publications
+
+- [Combined toxicity of polyethylene microplastics and chromium on the developmental stage of Nile tilapia](https://doi.org/10.1007/s13530-026-00341-8): Toxicology and Environmental Health Sciences, 2026
+- [Microplastics pollution in aquatic ecosystems of Bangladesh: a critical review on research trends and future perspectives](https://doi.org/10.1016/j.scitotenv.2025.180620): Science of the Total Environment 1002, 180620, 2025
+- [A comprehensive review on the negative impacts on Sundarbans fisheries](https://doi.org/10.1016/j.marpolbul.2025.118409): Marine Pollution Bulletin 220, 118409, 2025
+- [Increase in temperature increases ingestion and toxicity of polyamide microplastics in Nile tilapia](https://doi.org/10.1016/j.chemosphere.2023.138502): Chemosphere 327, 138502, 2023
+- [Winter bloom of marine cyanobacterium, Trichodesmium erythraeum and its relation to environmental factors](https://doi.org/10.3390/su15021311): Sustainability 15(2), 1311, 2023
+- Haor-based floodplain-rich freshwater ichthyofauna in Sylhet Division, Bangladesh: species availability, diversity, and conservation perspectives. Conservation 2, 639-661, 2022
+
+## Profiles
+
+- [Google Scholar](https://scholar.google.com/citations?user=pQL-hZsAAAAJ&hl=en): full publication list and citation counts
+- [ORCID](https://orcid.org/0000-0002-3812-4282)
+- [ResearchGate](https://www.researchgate.net/profile/Md-Ashfaq-Sadat)
+- [GitHub](https://github.com/ashfaq-sadat)
+- [LinkedIn](https://www.linkedin.com/in/ashfaqsadat)
+
+## Contact
+
+- [Contact section of the profile page](https://ashfaq-sadat.github.io/#contact): email, LinkedIn and Facebook
+- Address: Department of Fisheries Management, Bangladesh Agricultural University, Mymensingh 2202, Bangladesh
