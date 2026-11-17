@@ -9,12 +9,15 @@ This file is a plain-text summary of https://ashfaq-sadat.github.io/ for AI assi
 - Name: Md. Ashfaq Sadat (cited as Sadat MA or M. A. Sadat)
 - Role: PhD researcher, Department of Fisheries Management, Bangladesh Agricultural University
 - Supervisor: Professor Kizar Ahmed Sumon
-- Funding: UGC PhD Scholarship, University Grants Commission of Bangladesh (2023-24 programme)
+- Co-supervisor: Professor Harunur Rashid
+- Fellowships: BIMReN Split-Site PhD Fellowship (BIMSTEC-India Marine Research Network, 2024); UGC PhD Fellowship (University Grants Commission of Bangladesh, 2024)
+- PhD topic: microplastics in the Old Brahmaputra River and their role as carriers of pharmaceuticals and personal care products to Nile tilapia (started October 2024)
 - Research interests: microplastics, ecotoxicology, triclosan, environmental risk assessment, One Health
 - Main study organism: Nile tilapia (Oreochromis niloticus), larvae to adults
-- Skills: R (statistics, meta-analysis, figures), GIS and remote sensing, FTIR polymer identification, haematology and histology, qPCR
-- Founder of Nexalyze Lab (https://www.nexalyzelab.com), which teaches data analysis, GIS and research tools
-- Education: MS in Fisheries Management (2019-2022) and BSc in Fisheries (Hons., 2015-2018), both at Bangladesh Agricultural University
+- Skills: R, SPSS, SQL and Power BI; KoboToolbox and SurveyCTO field surveys; ArcGIS, QGIS and Google Earth Engine; FTIR polymer identification, haematology and histology, qPCR
+- Founder of Nexalyze Lab (https://www.nexalyzelab.com, since 2022), which teaches data analysis, GIS and research tools and has supported data analysis for more than fifty MS and two PhD projects
+- Previous roles: Lead Enumerator and Enumerator, WorldFish Bangladesh One Health programme (2022-2023); Research Fellow, post-harvest fish loss project, BAU (2021-2022); GIS Survey Lead, JICA marine fish landing centre survey, Cox's Bazar (2021)
+- Education: MS in Fisheries Management (2019-2021) and BSc in Fisheries (Hons., 2015-2018), both at Bangladesh Agricultural University
 
 ## Publications
 
@@ -23,7 +26,11 @@ This file is a plain-text summary of https://ashfaq-sadat.github.io/ for AI assi
 - [A comprehensive review on the negative impacts on Sundarbans fisheries](https://doi.org/10.1016/j.marpolbul.2025.118409): Marine Pollution Bulletin 220, 118409, 2025
 - [Increase in temperature increases ingestion and toxicity of polyamide microplastics in Nile tilapia](https://doi.org/10.1016/j.chemosphere.2023.138502): Chemosphere 327, 138502, 2023
 - [Winter bloom of marine cyanobacterium, Trichodesmium erythraeum and its relation to environmental factors](https://doi.org/10.3390/su15021311): Sustainability 15(2), 1311, 2023
-- Haor-based floodplain-rich freshwater ichthyofauna in Sylhet Division, Bangladesh: species availability, diversity, and conservation perspectives. Conservation 2, 639-661, 2022
+- [Haor-based floodplain-rich freshwater ichthyofauna in Sylhet Division, Bangladesh](https://doi.org/10.3390/conservation2040042): Conservation 2(4), 639-661, 2022
+
+## Presentations
+
+- Combined effects of polyethylene microplastics and chromium on growth, haemato-biochemistry and erythrocyte morphology of Nile tilapia. 1st International Scientific Conference on Sustainable Aquaculture and Fisheries, Chattogram, April 2025
 
 ## Profiles
 
