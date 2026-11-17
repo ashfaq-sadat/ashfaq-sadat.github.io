@@ -325,14 +325,12 @@
     /* Sidebar */
     .side {
       position: sticky;
-      top: 0;
+      top: 0; /* raised above 0 by script when the sidebar is taller than the window */
       align-self: start;
-      height: 100vh;
+      min-height: 100vh;
       padding: 52px 0 32px;
       display: flex;
       flex-direction: column;
-      overflow-y: auto;
-      scrollbar-width: none;
     }
 
     .photo {
@@ -640,7 +638,7 @@
     @media (max-width: 860px) {
       body { font-size: 16.5px; }
       .page { display: block; padding: 0 20px; }
-      .side { position: static; height: auto; padding: 32px 0 8px; overflow: visible; }
+      .side { position: static; min-height: 0; padding: 32px 0 8px; }
       .photo { width: 104px; height: 104px; }
       .side h1 { font-size: 1.75rem; margin-top: 16px; }
       .nav { display: none; }
@@ -1312,6 +1310,18 @@
           show.observe(el);
         });
       }
+
+      // Sidebar: when it is taller than the window, let it scroll up with the page until its
+      // bottom is in view, then hold it there (sticky with a negative top).
+      var side = document.querySelector('.side');
+      function fitSide() {
+        if (getComputedStyle(side).position !== 'sticky') { side.style.top = ''; return; }
+        var extra = side.offsetHeight - window.innerHeight;
+        side.style.top = extra > 0 ? (-extra) + 'px' : '0px';
+      }
+      window.addEventListener('resize', fitSide);
+      window.addEventListener('load', fitSide);
+      fitSide();
 
       // Reading progress bar along the top edge
       var bar = document.getElementById('progress'), ticking = false;
