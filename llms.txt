@@ -10,7 +10,7 @@ This file is a plain-text summary of https://ashfaq-sadat.github.io/ for AI assi
 - Role: PhD researcher, Department of Fisheries Management, Bangladesh Agricultural University
 - Supervisor: Professor Kizar Ahmed Sumon
 - Co-supervisor: Professor Harunur Rashid
-- Fellowships: BIMReN Split-Site PhD Fellowship (BIMSTEC-India Marine Research Network, 2024); UGC PhD Fellowship (University Grants Commission of Bangladesh, 2024); HSC Board Scholarship, General Grade (Board of Intermediate and Secondary Education, Dinajpur, 2013)
+- Fellowships: BIMReN Split-Site PhD Fellowship (BIMSTEC-India Marine Research Network, 2024); UGC PhD Fellowship (University Grants Commission of Bangladesh, 2024); BAURES MS Research Fellowship (Bangladesh Agricultural University Research System, July 2020 to June 2021); HSC Board Scholarship, General Grade (Board of Intermediate and Secondary Education, Dinajpur, 2013)
 - PhD topic: microplastics in the Old Brahmaputra River and their role as carriers of pharmaceuticals and personal care products to Nile tilapia (started October 2024)
 - Research interests: microplastics, ecotoxicology, triclosan, environmental risk assessment, One Health
 - Main study organism: Nile tilapia (Oreochromis niloticus), larvae to adults
