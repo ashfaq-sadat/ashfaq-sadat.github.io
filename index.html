@@ -325,13 +325,23 @@
     /* Sidebar */
     .side {
       position: sticky;
-      top: 0; /* raised above 0 by script when the sidebar is taller than the window */
+      top: 0;
       align-self: start;
-      min-height: 100vh;
-      padding: 52px 0 32px;
+      height: 100vh;
+      padding: 52px 12px 32px 0;
       display: flex;
       flex-direction: column;
+      /* On short windows the sidebar scrolls on its own: hover over it and use the wheel */
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: transparent transparent;
     }
+    .side:hover, .side:focus-within { scrollbar-color: var(--rule) transparent; }
+    .side::-webkit-scrollbar { width: 6px; }
+    .side::-webkit-scrollbar-thumb { background: transparent; border-radius: 3px; }
+    .side:hover::-webkit-scrollbar-thumb { background: var(--rule); }
+    .side > * { flex-shrink: 0; }
 
     .photo {
       width: 132px; height: 132px;
@@ -638,7 +648,7 @@
     @media (max-width: 860px) {
       body { font-size: 16.5px; }
       .page { display: block; padding: 0 20px; }
-      .side { position: static; min-height: 0; padding: 32px 0 8px; }
+      .side { position: static; height: auto; padding: 32px 0 8px; overflow: visible; }
       .photo { width: 104px; height: 104px; }
       .side h1 { font-size: 1.75rem; margin-top: 16px; }
       .nav { display: none; }
@@ -1272,8 +1282,25 @@
 
       // Highlight the current section in both menus, and reveal sections as they arrive
       var links = document.querySelectorAll('.nav a, .topnav a');
+      var sideBox = document.querySelector('.side');
       function mark(id) {
-        links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + id); });
+        links.forEach(function (a) {
+          var on = a.getAttribute('href') === '#' + id;
+          a.classList.toggle('on', on);
+          // Follow the page: if the active item is outside the sidebar's view, bring it in
+          if (on && a.closest('.nav') && sideBox.scrollHeight > sideBox.clientHeight && !sideBox.matches(':hover')) {
+            var r = a.getBoundingClientRect(), box = sideBox.getBoundingClientRect();
+            if (r.top < box.top + 40 || r.bottom > box.bottom - 40) {
+              sideBox.scrollTo({ top: sideBox.scrollTop + r.top - box.top - box.height / 2, behavior: 'smooth' });
+            }
+          }
+          if (on && a.closest('.topnav')) {
+            var bar = a.parentNode;
+            if (a.offsetLeft < bar.scrollLeft || a.offsetLeft + a.offsetWidth > bar.scrollLeft + bar.clientWidth) {
+              bar.scrollTo({ left: a.offsetLeft - 20, behavior: 'smooth' });
+            }
+          }
+        });
       }
       if ('IntersectionObserver' in window) {
         var spy = new IntersectionObserver(function (entries) {
@@ -1310,18 +1337,6 @@
           show.observe(el);
         });
       }
-
-      // Sidebar: when it is taller than the window, let it scroll up with the page until its
-      // bottom is in view, then hold it there (sticky with a negative top).
-      var side = document.querySelector('.side');
-      function fitSide() {
-        if (getComputedStyle(side).position !== 'sticky') { side.style.top = ''; return; }
-        var extra = side.offsetHeight - window.innerHeight;
-        side.style.top = extra > 0 ? (-extra) + 'px' : '0px';
-      }
-      window.addEventListener('resize', fitSide);
-      window.addEventListener('load', fitSide);
-      fitSide();
 
       // Reading progress bar along the top edge
       var bar = document.getElementById('progress'), ticking = false;
