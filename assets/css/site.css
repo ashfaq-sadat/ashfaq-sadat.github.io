@@ -555,3 +555,4 @@ html.js .pubs[data-limit] li[hidden] { display: none; }
   .pagehead h1 { font-size: 1.9rem; }
   .subpage .pubs li { grid-template-columns: 1fr; gap: 2px; }
 }
+.tag.tag-first { border-color: var(--accent); color: var(--accent); font-weight: 700; }

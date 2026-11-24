@@ -21,22 +21,32 @@ PAGES = [ROOT / "index.html", ROOT / "publications.html"]
 START, END = "<!-- PUBLICATIONS:START -->", "<!-- PUBLICATIONS:END -->"
 
 
+def is_first_author(p):
+    """True when the author list starts with Sadat (the site owner)."""
+    return p["authors_html"].lstrip().startswith("<b>Sadat")
+
+
 def item_html(p, indent="          "):
     title = p["title_html"]
+    topics = list(p["topics"])
+    first = is_first_author(p)
+    if first and "first-author" not in topics:
+        topics.append("first-author")
     if p.get("url"):
         title_el = (f'<a class="ptitle" href="{html.escape(p["url"])}" rel="noopener" target="_blank">'
                     f'{title}</a>')
     else:
         title_el = f'<span class="ptitle">{title}</span>'
     lines = [
-        f'<li data-t="{" ".join(p["topics"])}" data-year="{p["year"]}"',
+        f'<li data-t="{" ".join(topics)}" data-year="{p["year"]}"',
         f'  data-cite="{html.escape(p["citation"], quote=True)}">',
         f'  <span class="year">{p["year"]}</span>',
         '  <div>',
         f'    {title_el}',
         f'    <span class="authors">{p["authors_html"]}</span>',
         f'    <span class="venue">{p["venue_html"]}</span>',
-        f'    <span class="meta"><span class="tag">{html.escape(p["type"])}</span>',
+        f'    <span class="meta"><span class="tag">{html.escape(p["type"])}</span>'
+        + ('<span class="tag tag-first">First author</span>' if first else ''),
         '      <button class="copy" type="button">Copy citation</button></span>',
         '  </div>',
         '</li>',
