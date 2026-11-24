@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: "17 3 * * 1"   # every Monday, 03:17 UTC
   workflow_dispatch:
+  # Also run when the updater itself changes, so a fix can be tested straight away
+  push:
+    branches: [master]
+    paths:
+      - .github/scripts/update_scholar.py
+      - .github/workflows/scholar.yml
 
 permissions:
   contents: write
