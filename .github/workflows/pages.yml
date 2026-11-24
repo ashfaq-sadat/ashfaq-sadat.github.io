@@ -1,19 +1,21 @@
 name: Deploy site to GitHub Pages
 
+# Publishes the site. Each run first refreshes the Google Scholar numbers
+# (assets/data/scholar.json) inside the build, so nothing has to be committed
+# back to the protected master branch. If Scholar and SerpAPI both fail, the
+# numbers already saved in the repo are published unchanged.
 on:
   push:
     branches: [master]
-  # Redeploy after the weekly Scholar update commits new numbers
-  # (commits made by the workflow token do not trigger push events).
-  workflow_run:
-    workflows: ["Update Google Scholar metrics"]
-    types: [completed]
+  schedule:
+    - cron: "17 3 * * 1"   # every Monday, 03:17 UTC: weekly Scholar refresh
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: pages
@@ -29,6 +31,10 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: master
+      - name: Refresh Google Scholar numbers
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+        run: python3 .github/scripts/update_scholar.py || echo "::warning::Scholar refresh failed; publishing the saved numbers"
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

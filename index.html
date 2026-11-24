@@ -1392,7 +1392,7 @@
 
       mark('about');
 
-      // Google Scholar metrics, refreshed weekly by .github/workflows/scholar.yml
+      // Google Scholar metrics, refreshed weekly by .github/workflows/pages.yml
       function showScholar(d) {
         if (!d || typeof d.citations !== 'number') return;
         var items = [[d.articles, 'articles'], [d.citations, 'citations'], [d.h_index, 'h-index'], [d.i10_index, 'i10-index']];
