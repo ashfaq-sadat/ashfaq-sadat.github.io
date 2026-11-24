@@ -556,3 +556,5 @@ html.js .pubs[data-limit] li[hidden] { display: none; }
   .subpage .pubs li { grid-template-columns: 1fr; gap: 2px; }
 }
 .tag.tag-first { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.authors sup { font-size: 0.7em; line-height: 0; }
+.authors .eq { display: block; font-size: 0.82rem; font-style: italic; margin-top: 2px; }

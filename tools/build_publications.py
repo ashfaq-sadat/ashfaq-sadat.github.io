@@ -22,8 +22,9 @@ START, END = "<!-- PUBLICATIONS:START -->", "<!-- PUBLICATIONS:END -->"
 
 
 def is_first_author(p):
-    """True when the author list starts with Sadat (the site owner)."""
-    return p["authors_html"].lstrip().startswith("<b>Sadat")
+    """True when the site owner is first author, or a joint first author
+    ("equal_first": true in the data, with * marks in authors_html)."""
+    return p.get("equal_first") or p["authors_html"].lstrip().startswith("<b>Sadat")
 
 
 def item_html(p, indent="          "):
@@ -43,10 +44,12 @@ def item_html(p, indent="          "):
         f'  <span class="year">{p["year"]}</span>',
         '  <div>',
         f'    {title_el}',
-        f'    <span class="authors">{p["authors_html"]}</span>',
+        f'    <span class="authors">{p["authors_html"]}'
+        + ('<span class="eq"><sup>*</sup> Equal contribution</span>' if p.get("equal_first") else '') + '</span>',
         f'    <span class="venue">{p["venue_html"]}</span>',
         f'    <span class="meta"><span class="tag">{html.escape(p["type"])}</span>'
-        + ('<span class="tag tag-first">First author</span>' if first else ''),
+        + (f'<span class="tag tag-first">{"Joint first author" if p.get("equal_first") else "First author"}</span>'
+           if first else ''),
         '      <button class="copy" type="button">Copy citation</button></span>',
         '  </div>',
         '</li>',
