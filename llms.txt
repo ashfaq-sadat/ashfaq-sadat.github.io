@@ -21,6 +21,9 @@ This file is a plain-text summary of https://ashfaq-sadat.github.io/ for AI assi
 
 ## Publications
 
+Full list with weekly citation counts: https://ashfaq-sadat.github.io/publications.html
+
+
 - [Combined toxicity of polyethylene microplastics and chromium on the developmental stage of Nile tilapia](https://doi.org/10.1007/s13530-026-00341-8): Toxicology and Environmental Health Sciences, 2026
 - [Microplastics pollution in aquatic ecosystems of Bangladesh: a critical review on research trends and future perspectives](https://doi.org/10.1016/j.scitotenv.2025.180620): Science of the Total Environment 1002, 180620, 2025
 - [A comprehensive review on the negative impacts on Sundarbans fisheries](https://doi.org/10.1016/j.marpolbul.2025.118409): Marine Pollution Bulletin 220, 118409, 2025

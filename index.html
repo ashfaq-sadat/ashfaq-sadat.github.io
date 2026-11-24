@@ -244,482 +244,7 @@
     document.documentElement.className = 'js';
   </script>
 
-  <style>
-    :root {
-      --paper: #f6f3ec;
-      --card: #fffdf8;
-      --ink: #1c2a2b;
-      --muted: #5c6b6a;
-      --rule: #ddd6c6;
-      --accent: #0d6e6e;
-      --accent-soft: #e2efec;
-      --wos: #1d8f4e;
-      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
-      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --paper: #10191a;
-        --card: #162223;
-        --ink: #e6ece9;
-        --muted: #9aaba8;
-        --rule: #2a3a3a;
-        --accent: #5cc4b8;
-        --accent-soft: #1b3231;
-        --wos: #93ff9e;
-      }
-    }
-
-    :root[data-theme="dark"] {
-      --paper: #10191a;
-      --card: #162223;
-      --ink: #e6ece9;
-      --muted: #9aaba8;
-      --rule: #2a3a3a;
-      --accent: #5cc4b8;
-      --accent-soft: #1b3231;
-      --wos: #93ff9e;
-    }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-size: 17px;
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-      border-top: 4px solid var(--accent-soft);
-    }
-
-    a { color: var(--accent); text-underline-offset: 3px; }
-    a:hover { text-decoration-thickness: 2px; }
-
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-
-    .skip {
-      position: absolute; left: -999px; top: 0;
-      background: var(--accent); color: var(--paper); padding: 8px 14px; z-index: 30;
-    }
-    .skip:focus { left: 8px; top: 8px; }
-
-    button { font: inherit; color: inherit; cursor: pointer; }
-
-    .theme-btn {
-      position: fixed; top: 16px; right: 16px; z-index: 20;
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      border: 1px solid var(--rule);
-      background: var(--card);
-      font-size: 1.05rem;
-      line-height: 1;
-    }
-    .theme-btn:hover { border-color: var(--accent); }
-
-    .page {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: grid;
-      grid-template-columns: 290px minmax(0, 1fr);
-      gap: 64px;
-    }
-
-    /* Sidebar */
-    .side {
-      position: sticky;
-      top: 0;
-      align-self: start;
-      height: 100vh;
-      padding: 52px 12px 32px 0;
-      display: flex;
-      flex-direction: column;
-      /* On short windows the sidebar scrolls on its own: hover over it and use the wheel */
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      scrollbar-width: thin;
-      scrollbar-color: transparent transparent;
-    }
-    .side:hover, .side:focus-within { scrollbar-color: var(--rule) transparent; }
-    .side::-webkit-scrollbar { width: 6px; }
-    .side::-webkit-scrollbar-thumb { background: transparent; border-radius: 3px; }
-    .side:hover::-webkit-scrollbar-thumb { background: var(--rule); }
-    .side > * { flex-shrink: 0; }
-
-    .photo {
-      width: 132px; height: 132px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid var(--card);
-      box-shadow: 0 0 0 1px var(--rule);
-      flex: none;
-    }
-
-    .side h1 {
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: 2rem;
-      line-height: 1.15;
-      margin: 22px 0 8px;
-      letter-spacing: -0.01em;
-    }
-
-    .role { margin: 0; color: var(--muted); font-size: 0.97rem; line-height: 1.5; }
-    .role strong { color: var(--ink); font-weight: 600; }
-
-    .scholar {
-      display: block;
-      margin-top: 18px;
-      padding: 12px 14px;
-      background: var(--card);
-      border: 1px solid var(--rule);
-      border-radius: 10px;
-      text-decoration: none;
-      color: var(--ink);
-    }
-    .scholar[hidden] { display: none; }
-    .scholar:hover { border-color: var(--accent); }
-    .scholar .stats { display: flex; flex-wrap: wrap; gap: 8px 16px; }
-    .scholar .stat b {
-      display: block;
-      font-family: var(--serif);
-      font-size: 1.35rem;
-      line-height: 1.1;
-      color: var(--accent);
-    }
-    .scholar .stat { font-size: 0.8rem; color: var(--muted); }
-    .scholar .when { display: block; margin-top: 8px; font-size: 0.78rem; color: var(--muted); }
-
-    .nav { margin: 26px 0 0; padding: 0; list-style: none; }
-    .nav a {
-      display: block;
-      padding: 5px 0 5px 14px;
-      border-left: 2px solid var(--rule);
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color .15s, border-color .15s;
-    }
-    .nav a:hover { color: var(--accent); border-left-color: var(--accent); }
-    .nav a.on { color: var(--ink); border-left-color: var(--accent); font-weight: 600; }
-
-    .profiles {
-      margin: auto 0 0; padding: 24px 0 0; list-style: none;
-      display: flex; flex-wrap: wrap; gap: 6px 16px;
-      font-size: 0.9rem;
-    }
-    .profiles a { text-decoration: none; white-space: nowrap; }
-    .profiles a:hover { text-decoration: underline; }
-    .ico { width: 1.05em; height: 1.05em; flex: none; fill: currentColor; }
-    .ico-scholar { fill: #4285F4; }
-    .ico-wos { fill: var(--wos); }
-    .ico-orcid { fill: #A6CE39; }
-    .ico-researchgate { fill: #00CCBB; }
-    .ico-linkedin { fill: #0A66C2; }
-    .ico-facebook { fill: #0866FF; }
-    .ico-github { fill: var(--ink); }
-    .ico-web, .ico-mail { fill: var(--accent); }
-    .profiles a, .reach a { display: inline-flex; align-items: center; gap: 7px; }
-
-    /* Mobile section bar */
-    .topnav { display: none; }
-
-    /* Main column */
-    main { padding: 52px 0 40px; min-width: 0; }
-
-    section { padding: 0 0 52px; scroll-margin-top: 24px; }
-
-    h2 {
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: 1.45rem;
-      margin: 0 0 20px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .lead {
-      font-family: var(--serif);
-      font-size: 1.32rem;
-      line-height: 1.5;
-      margin: 0 0 18px;
-    }
-
-    p { margin: 0 0 16px; }
-
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; }
-    .chips li {
-      font-size: 0.85rem;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--ink);
-    }
-
-    .grid2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--rule);
-      border-radius: 10px;
-      padding: 18px 20px;
-    }
-    .card h3 { margin: 0 0 6px; font-size: 1.02rem; line-height: 1.4; }
-    .card p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
-
-    h3.sub { font-size: 1rem; margin: 30px 0 12px; }
-
-    .card p.card-links { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-size: 0.9rem; }
-    .card-links a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-    .card-links a:hover { text-decoration: underline; }
-
-    /* Timeline */
-    .tl { list-style: none; margin: 0; padding: 0; }
-    .tl li {
-      position: relative;
-      padding: 0 0 22px 24px;
-      border-left: 2px solid var(--rule);
-      margin-left: 6px;
-    }
-    .tl li:last-child { padding-bottom: 0; border-left-color: transparent; }
-    .tl li::before {
-      content: "";
-      position: absolute; left: -8px; top: 6px;
-      width: 14px; height: 14px; border-radius: 50%;
-      background: var(--paper);
-      border: 2px solid var(--accent);
-      box-sizing: border-box;
-    }
-    .tl li.now::before { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
-    .tl .when {
-      display: block;
-      font-size: 0.8rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 600;
-    }
-    .tl b { display: block; line-height: 1.4; }
-    .tl .where { display: block; font-size: 0.95rem; }
-    .tl .what { display: block; color: var(--muted); font-size: 0.95rem; margin-top: 2px; }
-    h3.sub.first { margin-top: 0; }
-
-    /* Publications */
-    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
-    .filters button {
-      font-size: 0.88rem;
-      padding: 5px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--rule);
-      background: transparent;
-      color: var(--muted);
-    }
-    .filters button:hover { border-color: var(--accent); color: var(--accent); }
-    .filters button[aria-pressed="true"] {
-      background: var(--accent); border-color: var(--accent); color: var(--paper);
-    }
-    html:not(.js) .filters, html:not(.js) .copy { display: none; }
-
-    .pubs { list-style: none; margin: 0; padding: 0; }
-    .pubs li {
-      display: grid;
-      grid-template-columns: 58px minmax(0, 1fr);
-      gap: 14px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--rule);
-    }
-    .pubs li[hidden] { display: none; }
-    .year {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      color: var(--accent);
-      font-weight: 600;
-    }
-    .ptitle { font-weight: 600; line-height: 1.45; display: block; }
-    .authors { color: var(--muted); font-size: 0.93rem; display: block; margin-top: 4px; }
-    .authors b { color: var(--ink); font-weight: 600; }
-    .venue { font-size: 0.93rem; display: block; margin-top: 2px; }
-    .venue i { font-family: var(--serif); font-size: 1rem; }
-    .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }
-    .tag {
-      font-size: 0.74rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 4px;
-      border: 1px solid var(--rule);
-      color: var(--muted);
-    }
-    .copy {
-      font-size: 0.8rem;
-      padding: 2px 10px;
-      border-radius: 4px;
-      border: 1px solid transparent;
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-    .copy:hover { border-color: var(--accent); }
-    .note { color: var(--muted); font-size: 0.92rem; margin-top: 16px; }
-    .cites {
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-decoration: none;
-      color: var(--accent);
-      padding: 2px 8px;
-      border-radius: 4px;
-      border: 1px solid var(--accent-soft);
-    }
-    .cites:hover { border-color: var(--accent); }
-
-    /* Rows */
-    .rows { margin: 0; }
-    .rows > div {
-      display: grid;
-      grid-template-columns: 150px minmax(0, 1fr);
-      gap: 14px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--rule);
-    }
-    .rows > div:first-child { padding-top: 0; }
-    .rows dt { color: var(--muted); font-size: 0.93rem; }
-    .rows dd { margin: 0; }
-    .rows dd span { display: block; color: var(--muted); font-size: 0.93rem; }
-
-    .repo { display: block; text-decoration: none; color: inherit; padding: 16px 18px; transition: border-color .15s; }
-    .repo:hover { border-color: var(--accent); }
-    .repo strong { color: var(--accent); font-family: var(--mono); font-size: 0.92rem; }
-    .repo span { display: block; color: var(--muted); font-size: 0.93rem; margin-top: 4px; line-height: 1.5; }
-    .repos { margin-bottom: 28px; }
-
-    .contact {
-      background: var(--accent-soft);
-      border-radius: 12px;
-      padding: 24px 26px;
-    }
-    .contact p:last-child { margin-bottom: 0; }
-    .reach { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
-    .reach a {
-      padding: 8px 16px;
-      border-radius: 999px;
-      background: var(--card);
-      border: 1px solid var(--rule);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      overflow-wrap: anywhere;
-    }
-    .reach a:hover { border-color: var(--accent); }
-    .addr { color: var(--muted); font-size: 0.93rem; }
-
-    .signet {
-      width: 170px; height: 85px;
-      margin: 0 0 18px;
-      background: var(--accent);
-      -webkit-mask: url(assets/img/logo.png) left center / contain no-repeat;
-      mask: url(assets/img/logo.png) left center / contain no-repeat;
-    }
-
-    footer {
-      color: var(--muted);
-      font-size: 0.88rem;
-      padding: 8px 0 40px;
-      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-    }
-
-    /* Scroll effects: only when the visitor has not asked for reduced motion */
-    .progress {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 25;
-      height: 4px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: 0 50%;
-    }
-    h2 { position: relative; }
-    h2::after {
-      content: "";
-      position: absolute; left: 0; bottom: -1px;
-      height: 2px; width: 56px;
-      background: var(--accent);
-    }
-    @media (prefers-reduced-motion: no-preference) {
-      .js .rv {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity .65s ease, transform .65s cubic-bezier(.2, .7, .2, 1);
-      }
-      .js .rv.rv-left { transform: translateX(-18px); }
-      .js .rv.rv-zoom { transform: scale(.96); }
-      .js .rv.in { opacity: 1; transform: none; }
-      .js h2.rv::after { width: 0; transition: width .8s ease .25s; }
-      .js h2.rv.in::after { width: 56px; }
-      .js .tl li.rv::before { transform: scale(0); transition: transform .45s cubic-bezier(.3, 1.6, .5, 1) .2s; }
-      .js .tl li.rv.in::before { transform: none; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-    }
-
-    @media (max-width: 860px) {
-      body { font-size: 16.5px; }
-      .page { display: block; padding: 0 20px; }
-      .side { position: static; height: auto; padding: 32px 0 8px; overflow: visible; }
-      .photo { width: 104px; height: 104px; }
-      .side h1 { font-size: 1.75rem; margin-top: 16px; }
-      .nav { display: none; }
-      .profiles { margin-top: 0; padding-top: 16px; }
-
-      .topnav {
-        display: flex;
-        position: sticky; top: 0; z-index: 10;
-        gap: 4px;
-        margin: 16px -20px 0;
-        padding: 8px 20px;
-        overflow-x: auto;
-        scrollbar-width: none;
-        background: var(--paper);
-        border-bottom: 1px solid var(--rule);
-      }
-      .topnav::-webkit-scrollbar { display: none; }
-      .topnav a {
-        flex: none;
-        padding: 5px 12px;
-        border-radius: 999px;
-        font-size: 0.88rem;
-        color: var(--muted);
-        text-decoration: none;
-      }
-      .topnav a.on { background: var(--accent-soft); color: var(--ink); font-weight: 600; }
-
-      .theme-btn { position: absolute; top: 20px; right: 16px; }
-      main { padding-top: 28px; }
-      section { padding-bottom: 40px; scroll-margin-top: 60px; }
-      .lead { font-size: 1.18rem; }
-      .grid2 { grid-template-columns: 1fr; }
-      .pubs li { grid-template-columns: 1fr; gap: 2px; }
-      .rows > div { grid-template-columns: 1fr; gap: 2px; }
-    }
-
-    @media print {
-      body { border-top: 0; font-size: 11pt; }
-      .page { display: block; }
-      .side { position: static; height: auto; padding: 0; }
-      .nav, .topnav, .theme-btn, .filters, .copy, .scholar .when { display: none !important; }
-      .rv { opacity: 1 !important; transform: none !important; }
-      .progress { display: none; }
-      .pubs li[hidden] { display: grid; }
-      a { color: inherit; text-decoration: none; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/site.css">
 </head>
 
 <body>
@@ -869,96 +394,86 @@
       <section id="publications">
         <h2>Publications</h2>
 
-        <div class="filters" role="group" aria-label="Filter publications">
-          <button type="button" data-f="all" aria-pressed="true">All</button>
-          <button type="button" data-f="microplastics" aria-pressed="false">Microplastics</button>
-          <button type="button" data-f="ecology" aria-pressed="false">Fisheries and ecology</button>
-          <button type="button" data-f="review" aria-pressed="false">Reviews</button>
+        <div class="pubtabs" role="tablist" aria-label="Order publications">
+          <button type="button" role="tab" data-sort="recent" aria-selected="true">Recently published</button>
+          <button type="button" role="tab" data-sort="cited" aria-selected="false">Most cited</button>
         </div>
 
-        <ol class="pubs" id="pubs">
-          <li data-t="microplastics"
+        <ol class="pubs" id="pubs" data-limit="3">
+          <!-- PUBLICATIONS:START -->
+          <li data-t="microplastics" data-year="2026"
             data-cite="Kanok, N. J. R., Sharmin, S., Sadat, M. A., Siddiquee, M. A. M., Nayak, S., Zulfahmi, I., Rashid, H., &amp; Sumon, K. A. (2026). Combined toxicity of polyethylene microplastics and chromium on the developmental stage of Nile tilapia (Oreochromis niloticus). Toxicology and Environmental Health Sciences. https://doi.org/10.1007/s13530-026-00341-8">
             <span class="year">2026</span>
             <div>
-              <a class="ptitle" href="https://doi.org/10.1007/s13530-026-00341-8" rel="noopener" target="_blank">Combined toxicity of
-                polyethylene microplastics and chromium on the developmental stage of Nile tilapia
-                (<i>Oreochromis niloticus</i>)</a>
-              <span class="authors">Kanok NJR, Sharmin S, <b>Sadat MA</b>, Siddiquee MAM, Nayak S, Zulfahmi I,
-                Rashid H, Sumon KA</span>
+              <a class="ptitle" href="https://doi.org/10.1007/s13530-026-00341-8" rel="noopener" target="_blank">Combined toxicity of polyethylene microplastics and chromium on the developmental stage of Nile tilapia (<i>Oreochromis niloticus</i>)</a>
+              <span class="authors">Kanok NJR, Sharmin S, <b>Sadat MA</b>, Siddiquee MAM, Nayak S, Zulfahmi I, Rashid H, Sumon KA</span>
               <span class="venue"><i>Toxicology and Environmental Health Sciences</i></span>
               <span class="meta"><span class="tag">Article</span>
                 <button class="copy" type="button">Copy citation</button></span>
             </div>
           </li>
-          <li data-t="microplastics review"
+          <li data-t="microplastics review" data-year="2025"
             data-cite="Al-Emran, M., Sarker, A., Adib, S. S., Nayem, M. J., Sultana, T., Sadat, M. A., &amp; Shahjahan, M. (2025). Microplastics pollution in aquatic ecosystems of Bangladesh: A critical review on research trends and future perspectives. Science of the Total Environment, 1002, 180620. https://doi.org/10.1016/j.scitotenv.2025.180620">
             <span class="year">2025</span>
             <div>
-              <a class="ptitle" href="https://doi.org/10.1016/j.scitotenv.2025.180620" rel="noopener" target="_blank">Microplastics pollution
-                in aquatic ecosystems of Bangladesh: a critical review on research trends and future
-                perspectives</a>
-              <span class="authors">Al-Emran M, Sarker A, Adib SS, Nayem MJ, Sultana T, <b>Sadat MA</b>,
-                Shahjahan M</span>
+              <a class="ptitle" href="https://doi.org/10.1016/j.scitotenv.2025.180620" rel="noopener" target="_blank">Microplastics pollution in aquatic ecosystems of Bangladesh: a critical review on research trends and future perspectives</a>
+              <span class="authors">Al-Emran M, Sarker A, Adib SS, Nayem MJ, Sultana T, <b>Sadat MA</b>, Shahjahan M</span>
               <span class="venue"><i>Science of the Total Environment</i> 1002, 180620</span>
               <span class="meta"><span class="tag">Review</span>
                 <button class="copy" type="button">Copy citation</button></span>
             </div>
           </li>
-          <li data-t="ecology review"
+          <li data-t="ecology review" data-year="2025"
             data-cite="Sumon, K. A., Kanok, N. J. R., Sadat, M. A., Mainuddin, M., Wahid, S. M., &amp; Karim, F. (2025). A comprehensive review on the negative impacts on Sundarbans fisheries: Insights from the hydrological changes modulated by climate change and anthropogenic activities. Marine Pollution Bulletin, 220, 118409. https://doi.org/10.1016/j.marpolbul.2025.118409">
             <span class="year">2025</span>
             <div>
-              <a class="ptitle" href="https://doi.org/10.1016/j.marpolbul.2025.118409" rel="noopener" target="_blank">A comprehensive review
-                on the negative impacts on Sundarbans fisheries: insights from the hydrological changes
-                modulated by climate change and anthropogenic activities</a>
+              <a class="ptitle" href="https://doi.org/10.1016/j.marpolbul.2025.118409" rel="noopener" target="_blank">A comprehensive review on the negative impacts on Sundarbans fisheries: insights from the hydrological changes modulated by climate change and anthropogenic activities</a>
               <span class="authors">Sumon KA, Kanok NJR, <b>Sadat MA</b>, Mainuddin M, Wahid SM, Karim F</span>
               <span class="venue"><i>Marine Pollution Bulletin</i> 220, 118409</span>
               <span class="meta"><span class="tag">Review</span>
                 <button class="copy" type="button">Copy citation</button></span>
             </div>
           </li>
-          <li data-t="microplastics"
+          <li data-t="microplastics" data-year="2023"
             data-cite="Hasan, J., Siddik, M. A., Ghosh, A. K., Mesbah, S. B., Sadat, M. A., &amp; Shahjahan, M. (2023). Increase in temperature increases ingestion and toxicity of polyamide microplastics in Nile tilapia. Chemosphere, 327, 138502. https://doi.org/10.1016/j.chemosphere.2023.138502">
             <span class="year">2023</span>
             <div>
-              <a class="ptitle" href="https://doi.org/10.1016/j.chemosphere.2023.138502" rel="noopener" target="_blank">Increase in
-                temperature increases ingestion and toxicity of polyamide microplastics in Nile tilapia</a>
+              <a class="ptitle" href="https://doi.org/10.1016/j.chemosphere.2023.138502" rel="noopener" target="_blank">Increase in temperature increases ingestion and toxicity of polyamide microplastics in Nile tilapia</a>
               <span class="authors">Hasan J, Siddik MA, Ghosh AK, Mesbah SB, <b>Sadat MA</b>, Shahjahan M</span>
               <span class="venue"><i>Chemosphere</i> 327, 138502</span>
               <span class="meta"><span class="tag">Article</span>
                 <button class="copy" type="button">Copy citation</button></span>
             </div>
           </li>
-          <li data-t="ecology"
+          <li data-t="ecology" data-year="2023"
             data-cite="Shaika, N. A., Alhomaidi, E., Sarker, M. M., An Nur, A., Sadat, M. A., Awal, S., Mostafa, G., Hasan, S. J., Mahmud, Y., &amp; Khan, S. (2023). Winter bloom of marine cyanobacterium, Trichodesmium erythraeum and its relation to environmental factors. Sustainability, 15(2), 1311. https://doi.org/10.3390/su15021311">
             <span class="year">2023</span>
             <div>
-              <a class="ptitle" href="https://doi.org/10.3390/su15021311" rel="noopener" target="_blank">Winter bloom of marine
-                cyanobacterium, <i>Trichodesmium erythraeum</i> and its relation to environmental factors</a>
-              <span class="authors">Shaika NA, Alhomaidi E, Sarker MM, An Nur A, <b>Sadat MA</b>, Awal S,
-                Mostafa G, Hasan SJ, Mahmud Y, Khan S</span>
+              <a class="ptitle" href="https://doi.org/10.3390/su15021311" rel="noopener" target="_blank">Winter bloom of marine cyanobacterium, <i>Trichodesmium erythraeum</i> and its relation to environmental factors</a>
+              <span class="authors">Shaika NA, Alhomaidi E, Sarker MM, An Nur A, <b>Sadat MA</b>, Awal S, Mostafa G, Hasan SJ, Mahmud Y, Khan S</span>
               <span class="venue"><i>Sustainability</i> 15(2), 1311</span>
               <span class="meta"><span class="tag">Article</span>
                 <button class="copy" type="button">Copy citation</button></span>
             </div>
           </li>
-          <li data-t="ecology"
+          <li data-t="ecology" data-year="2022"
             data-cite="Sarker, F. C., Rahman, M. K., Sadat, M. A., Shahriar, A., &amp; Nowsad Alam, A. K. M. (2022). Haor-based floodplain-rich freshwater ichthyofauna in Sylhet Division, Bangladesh: Species availability, diversity, and conservation perspectives. Conservation, 2(4), 639-661. https://doi.org/10.3390/conservation2040042">
             <span class="year">2022</span>
             <div>
-              <a class="ptitle" href="https://doi.org/10.3390/conservation2040042" rel="noopener" target="_blank">Haor-based floodplain-rich freshwater ichthyofauna in Sylhet Division,
-                Bangladesh: species availability, diversity, and conservation perspectives</a>
+              <a class="ptitle" href="https://doi.org/10.3390/conservation2040042" rel="noopener" target="_blank">Haor-based floodplain-rich freshwater ichthyofauna in Sylhet Division, Bangladesh: species availability, diversity, and conservation perspectives</a>
               <span class="authors">Sarker FC, Rahman MK, <b>Sadat MA</b>, Shahriar A, Nowsad Alam AKM</span>
               <span class="venue"><i>Conservation</i> 2(4), 639&ndash;661</span>
               <span class="meta"><span class="tag">Article</span>
                 <button class="copy" type="button">Copy citation</button></span>
             </div>
           </li>
+          <!-- PUBLICATIONS:END -->
         </ol>
-        <p class="note">
-          The full and current list, with citation counts, is on
-          <a href="https://scholar.google.com/citations?user=pQL-hZsAAAAJ&hl=en" rel="noopener" target="_blank">Google Scholar</a>.
+
+        <p class="more">
+          <a class="morebtn" href="publications.html">See all <span class="pub-count">6</span> publications
+            <span aria-hidden="true">&rarr;</span></a>
+          <span class="more-note">with topics, sorting and citation counts</span>
         </p>
       </section>
 
@@ -1271,6 +786,7 @@
     </main>
   </div>
 
+  <script src="assets/js/publications.js"></script>
   <script>
     (function () {
       var root = document.documentElement;
@@ -1290,43 +806,6 @@
         root.setAttribute('data-theme', next);
         try { localStorage.setItem('theme', next); } catch (e) { }
         paintBtn();
-      });
-
-      // Publication filter
-      var pubs = document.querySelectorAll('#pubs li');
-      var fbtns = document.querySelectorAll('.filters button');
-      fbtns.forEach(function (b) {
-        b.addEventListener('click', function () {
-          var f = b.getAttribute('data-f');
-          fbtns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-          pubs.forEach(function (li) {
-            li.hidden = f !== 'all' && (' ' + li.getAttribute('data-t') + ' ').indexOf(' ' + f + ' ') < 0;
-          });
-        });
-      });
-
-      // Copy citation
-      function copyText(text) {
-        if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
-        return new Promise(function (ok, fail) {
-          var ta = document.createElement('textarea');
-          ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-          document.body.appendChild(ta); ta.select();
-          try { document.execCommand('copy') ? ok() : fail(); } catch (e) { fail(e); }
-          document.body.removeChild(ta);
-        });
-      }
-      document.querySelectorAll('.copy').forEach(function (c) {
-        c.addEventListener('click', function () {
-          var li = c.closest('li');
-          copyText(li.getAttribute('data-cite')).then(function () {
-            c.textContent = 'Copied';
-          }, function () {
-            c.textContent = 'Copy failed';
-          }).then(function () {
-            setTimeout(function () { c.textContent = 'Copy citation'; }, 1800);
-          });
-        });
       });
 
       // Highlight the current section in both menus, and reveal sections as they arrive
@@ -1421,38 +900,8 @@
         document.getElementById('scholar-when').textContent = 'Google Scholar' + (isNaN(when) ? '' :
           ', updated ' + when.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }));
         document.getElementById('scholar').hidden = false;
-        if (d.papers && d.papers.length) labelPapers(d.papers);
       }
 
-      // Put Google Scholar's "cited by" count on each matching paper in the list
-      function words(t) {
-        return (t || '').toLowerCase().normalize('NFKD').replace(/[^a-z0-9 ]+/g, ' ')
-          .split(/\s+/).filter(function (w) { return w.length > 2; });
-      }
-      function similar(a, b) {
-        var A = words(a), B = words(b);
-        if (!A.length || !B.length) return 0;
-        var setB = {}; B.forEach(function (w) { setB[w] = true; });
-        var shared = A.filter(function (w) { return setB[w]; }).length;
-        return shared / Math.min(A.length, B.length);
-      }
-      function labelPapers(papers) {
-        document.querySelectorAll('#pubs li').forEach(function (li) {
-          var title = li.querySelector('.ptitle').textContent, best = null, score = 0;
-          papers.forEach(function (p) {
-            var s = similar(title, p.title);
-            if (s > score) { score = s; best = p; }
-          });
-          if (!best || score < 0.8 || !(best.cited_by > 0)) return;
-          var a = document.createElement('a');
-          a.className = 'cites';
-          a.href = 'https://scholar.google.com/citations?user=pQL-hZsAAAAJ&hl=en';
-          a.target = '_blank'; a.rel = 'noopener';
-          a.textContent = 'Cited by ' + best.cited_by;
-          a.title = 'Citations on Google Scholar';
-          li.querySelector('.meta').appendChild(a);
-        });
-      }
       fetch('assets/data/scholar.json', { cache: 'no-cache' })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(showScholar)
