@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Fetch Google Scholar citation metrics and save them to assets/data/scholar.json.
 
+Besides the profile totals, it saves each paper's title, year and "cited by"
+count under "papers", which the website uses to label its publication list.
+
 Tries the public profile page first. If Google blocks the request and a
 SERPAPI_KEY secret is set, falls back to SerpAPI. If both fail, the script
 exits with an error and leaves the existing JSON file untouched, so the site
@@ -39,18 +42,37 @@ def count_rows(html):
     return len(re.findall(r'<tr class="gsc_a_tr"', html))
 
 
+def clean(text):
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", text or "")).strip()
+
+
+def parse_papers(html):
+    """Title, citation count and year for every article row on a profile page."""
+    papers = []
+    for row in re.findall(r'<tr class="gsc_a_tr".*?</tr>', html, re.S):
+        title = re.search(r'class="gsc_a_at"[^>]*>(.*?)</a>', row, re.S)
+        cited = re.search(r'class="gsc_a_ac[^"]*"[^>]*>(\d*)</a>', row)
+        year = re.search(r'class="gsc_a_h gsc_a_hc[^"]*"[^>]*>(\d{4})<', row)
+        if title:
+            papers.append({"title": clean(title.group(1)),
+                           "cited_by": int(cited.group(1)) if cited and cited.group(1) else 0,
+                           "year": int(year.group(1)) if year else None})
+    return papers
+
+
 def from_scholar():
     base = f"https://scholar.google.com/citations?user={SCHOLAR_ID}&hl=en&pagesize=100"
     html = get(base + "&cstart=0")
     stats = parse_profile(html)
-    articles, start, n = 0, 0, count_rows(html)
-    while True:
-        articles += n
-        if n < 100 or start >= 900:
-            break
+    papers, start = parse_papers(html), 0
+    n = count_rows(html)
+    while n >= 100 and start < 900:
         start += 100
-        n = count_rows(get(f"{base}&cstart={start}"))
-    stats["articles"] = articles
+        page = get(f"{base}&cstart={start}")
+        n = count_rows(page)
+        papers += parse_papers(page)
+    stats["articles"] = len(papers) or None
+    stats["papers"] = papers
     return stats
 
 
@@ -66,9 +88,16 @@ def from_serpapi(key):
                 out[name] = int(v["all"])
     if "citations" not in out:
         raise ValueError("SerpAPI response had no citation table")
-    n = len(data.get("articles", []))
+    papers = []
+    for a in data.get("articles", []):
+        cited = (a.get("cited_by") or {}).get("value")
+        year = str(a.get("year") or "")
+        papers.append({"title": clean(a.get("title")),
+                       "cited_by": int(cited) if cited else 0,
+                       "year": int(year) if year.isdigit() else None})
+    n = len(papers)
     return {"citations": out["citations"], "h_index": out.get("h_index"), "i10_index": out.get("i10_index"),
-            "articles": n if 0 < n < 100 else None}
+            "articles": n if 0 < n < 100 else None, "papers": papers}
 
 
 def main():
@@ -88,7 +117,9 @@ def main():
         with open(OUT, "w", encoding="utf-8") as f:
             json.dump(stats, f, indent=2)
             f.write("\n")
-        print("saved", stats)
+        print("saved", {k: v for k, v in stats.items() if k != "papers"})
+        for p in stats.get("papers", []):
+            print(f"  paper: {p['cited_by']:>4}  {p['year']}  {p['title']}")
         return 0
     print("Could not update Scholar metrics; keeping the existing file.", *errors, sep="\n  ", file=sys.stderr)
     return 1
