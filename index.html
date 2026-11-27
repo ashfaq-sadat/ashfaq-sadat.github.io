@@ -142,7 +142,12 @@
         "UGC PhD Fellowship (2024)",
         "BAURES MS Research Fellowship, Bangladesh Agricultural University Research System (2020-2021)",
         "HSC Board Scholarship, General Grade, Board of Intermediate and Secondary Education, Dinajpur (2013)"
-      ]
+      ],
+      "memberOf": {
+        "@type": "Organization",
+        "name": "Society of Environmental Toxicology and Chemistry (SETAC)",
+        "url": "https://www.setac.org"
+      }
     },
     {
       "@type": "ScholarlyArticle",
@@ -516,7 +521,7 @@
       </section>
 
       <section id="awards">
-        <h2>Awards and grants</h2>
+        <h2>Awards, grants and memberships</h2>
         <ol class="tl">
           <!-- HIDDEN: BIMReN fellowship. To show it again, delete these four note lines and the
                "END HIDDEN" line below, keeping the entry in between. Also re-add
@@ -552,6 +557,21 @@
             <span class="what">Awarded on Higher Secondary Certificate examination results.</span>
           </li>
         </ol>
+
+        <h3 class="sub">Memberships</h3>
+        <ol class="tl">
+          <li class="now">
+            <span class="when">Jul 2025 &ndash; present</span>
+            <b>Student Member</b>
+            <span class="where"><a href="https://www.setac.org" rel="noopener" target="_blank">Society of Environmental
+              Toxicology and Chemistry (SETAC)</a>, Asia-Pacific</span>
+          </li>
+          <li>
+            <span class="when">Dec 2024 &ndash; Jul 2025</span>
+            <b>Professional Member</b>
+            <span class="where">Society of Environmental Toxicology and Chemistry (SETAC), Asia-Pacific</span>
+          </li>
+        </ol>
       </section>
 
       <section id="teaching">
@@ -581,7 +601,7 @@
         <h2>Training and workshops</h2>
 
         <h3 class="sub first">Training I lead</h3>
-        <ol class="tl">
+        <ol class="tl" data-limit="2">
           <li class="now">
             <span class="when">Since 2022 &middot; Nexalyze Lab</span>
             <b>GIS and remote sensing for research</b>
@@ -612,7 +632,7 @@
           <a href="https://www.nexalyzelab.com" rel="noopener" target="_blank">nexalyzelab.com</a>.</p>
 
         <h3 class="sub">Training I attended</h3>
-        <ol class="tl">
+        <ol class="tl" data-limit="1">
           <li>
             <span class="when">Oct &ndash; Nov 2020 &middot; 6 weeks</span>
             <b>Advanced data analysis using statistical packages</b>
@@ -712,7 +732,7 @@
         </ol>
 
         <h3 class="sub">Experience</h3>
-        <ol class="tl">
+        <ol class="tl" data-limit="3">
           <li class="now">
             <span class="when">Sep 2022 &ndash; present</span>
             <b>Founder and Data Analyst</b>
@@ -861,6 +881,29 @@
         }, { rootMargin: '-30% 0px -60% 0px' });
         document.querySelectorAll('main section').forEach(function (s) { spy.observe(s); });
       }
+
+      // Long timelines: show the first few entries, with a button for the rest
+      document.querySelectorAll('ol.tl[data-limit]').forEach(function (ol) {
+        var limit = +ol.getAttribute('data-limit');
+        var items = ol.querySelectorAll(':scope > li');
+        if (items.length <= limit) return;
+        var extra = items.length - limit;
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'tl-more';
+        b.setAttribute('aria-expanded', 'false');
+        function set(open) {
+          items.forEach(function (li, i) {
+            li.hidden = !open && i >= limit;
+            li.classList.toggle('tl-end', !open && i === limit - 1);
+          });
+          b.setAttribute('aria-expanded', open ? 'true' : 'false');
+          b.textContent = open ? 'Show fewer' : 'Show ' + extra + ' more';
+        }
+        b.addEventListener('click', function () { set(b.getAttribute('aria-expanded') !== 'true'); });
+        set(false);
+        ol.after(b);
+      });
 
       // Fade and slide pieces in as they scroll into view, a little after one another
       var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
